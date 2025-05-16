@@ -1,0 +1,11 @@
+*.o
+*.d
+_*
+kernel
+user/usys.S
+user/initcode
+user/initcode.out
+*.tex
+*.log
+*.aux
+*.pdf
