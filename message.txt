@@ -66,4 +66,6 @@ $ _kthread_edge
 exec _kthread_edge failed
 $ _kthread_arg
 exec _kthread_arg failed
-$ " and i need you to update the test.txt that explain how to test to make understant what was the step before  "i need you to create history.txt that you explain for your self for next time what was the problem what you did and each time you append to make you learn faster each time i send you message because when i send message to you you forget what we did before ok" don't go to terminal until you find the soulution 
+$ " and i need you to update the test.txt that explain how to test to make understant what was the step before  "i need you to create history.txt that you explain for your self for next time what was the problem what you did and each time you append to make you learn faster each time i send you message because when i send message to you you forget what we did before ok" don't go to terminal until you find the soulution  (now when run this happen  "$ _kthreadtest
+exec _kthreadtest failed
+$ _kthread_many" and the device lag and be heavy and not doing in thing don't forget to update all thing like histort.txt and test to next time to understand what happen )
