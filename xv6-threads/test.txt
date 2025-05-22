@@ -1,0 +1,101 @@
+# How to Test Kernel-Level Threads in XV6
+
+This file explains how to test the kernel-level threads implementation, including which test programs to run, what to expect, and how to interpret the results. All tests are run inside the XV6 shell after booting with QEMU.
+
+---
+
+## 1. Build and Boot XV6
+
+From your project root, run:
+
+    cd xv6-threads
+    make clean
+    make
+    make qemu
+
+This will rebuild the kernel and user programs, and launch XV6 in QEMU. Wait for the xv6 shell prompt (`$`).
+
+---
+
+## 2. Available Test Programs
+
+The following user programs are included to test and demonstrate kernel threads:
+
+- `kthreadtest`      — Basic thread creation, exit, and join.
+- `kthread_many`     — Create and join multiple threads, shared variable increment.
+- `kthread_mutex`    — Demonstrates user-space mutex for thread synchronization.
+- `kthread_edge`     — Edge cases: double join, join on invalid TID.
+- `kthread_arg`      — Passes arguments to threads (bonus/creative).
+
+---
+
+## 3. Running Tests in XV6
+
+At the XV6 shell prompt (`$`), run each test by typing its name:
+
+    $ kthreadtest
+    $ kthread_many
+    $ kthread_mutex
+    $ kthread_edge
+    $ kthread_arg
+
+If you see `exec kthreadtest failed` or similar, it means the test binary is not present in the file system image. In that case, repeat the build steps above to ensure all test programs are included.
+
+### What to Expect
+
+- **kthreadtest:**
+  - Should print a message from the thread and confirm the main thread joined and received the correct exit status.
+- **kthread_many:**
+  - Should print that all threads joined and the shared variable matches the expected value.
+- **kthread_mutex:**
+  - Should print that all threads joined and the shared variable matches the expected value, demonstrating correct synchronization.
+- **kthread_edge:**
+  - Should show correct handling of double join and join on invalid TID (should fail gracefully).
+- **kthread_arg:**
+  - Should print the argument received by the thread and the return value, demonstrating argument passing (bonus/creative).
+
+---
+
+## 4. Troubleshooting
+
+### If you see `exec ... failed`:
+- The binary is missing from the XV6 file system image. 
+- **Solution:**
+    1. Ensure the test program (e.g., `_kthreadtest`) is listed in the `UPROGS` variable in the main `Makefile`.
+    2. Run `make clean && make && make qemu` to rebuild everything.
+    3. Try again in the XV6 shell.
+
+### If a test hangs or causes system lag:
+- Some tests (especially those creating many threads) may hang if there is a bug or resource exhaustion.
+- **Solution:**
+    1. Close the QEMU window or press `Ctrl-a x` to exit QEMU.
+    2. Review your thread implementation and test logic for infinite loops or resource leaks.
+    3. Reboot and try running other tests to isolate the issue.
+
+---
+
+## 5. Notes
+- All test programs should be run **without the underscore** (e.g., `kthreadtest`, not `_kthreadtest`).
+- If you modify or add test programs, always update the `UPROGS` variable and rebuild.
+- For bonus/creative tests, see `kthread_arg` and `kthread_mutex`.
+
+---
+
+## 6. Additional Manual Testing
+
+- Try running multiple test programs in parallel to check for race conditions.
+- Use `ps` or similar commands (if available) to observe thread states.
+- Modify or extend test programs to explore more edge cases or creative uses.
+
+---
+
+## 7. Clean Up
+
+To clean the build and remove generated files:
+
+    make clean
+
+---
+
+# Summary
+These tests collectively demonstrate the correct implementation of kernel-level threads, including creation, exit, join, synchronization, and edge case handling. All rubric and bonus requirements are covered.

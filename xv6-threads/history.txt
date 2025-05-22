@@ -1,0 +1,25 @@
+# Kernel-Level Threads in XV6: Development History
+
+## Problems Encountered & Solutions
+
+### 1. Test Binaries Not Found (exec ... failed)
+- **Problem:** Running test programs in the XV6 shell (e.g., `kthreadtest`) resulted in `exec ... failed` errors.
+- **Cause:** The test binaries were not included in the XV6 file system image because they were missing from the `UPROGS` variable in the main `Makefile`.
+- **Solution:** Added all test binaries (`_kthreadtest`, `_kthread_many`, etc.) to the `UPROGS` variable in the top-level `Makefile`. Rebuilt the system to ensure inclusion.
+
+### 2. System Lag or Infinite Loops During Tests
+- **Problem:** Running some tests (e.g., `kthread_many`) caused the system to hang or become unresponsive.
+- **Cause:** Potential bugs in thread creation, stack setup, or test logic (e.g., infinite loops, resource exhaustion).
+- **Solution:** Reviewed thread management code and test logic. Added sanity checks and improved error handling in test programs. Updated documentation to warn users and provide recovery steps.
+
+### 3. Documentation and Usability
+- **Problem:** Users were unclear on how to run tests, interpret results, or recover from hangs.
+- **Solution:** Updated `test.txt` with clear instructions, troubleshooting, and recovery steps. Created this `history.txt` to log issues and solutions for future reference.
+
+## Lessons Learned
+- Always verify that all user programs are listed in the `UPROGS` variable for inclusion in the XV6 file system image.
+- Add robust error handling and sanity checks in test programs to prevent hangs.
+- Maintain clear, up-to-date documentation for users and future maintainers.
+
+---
+(Continue to append new issues and solutions as development progresses.)

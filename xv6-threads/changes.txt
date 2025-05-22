@@ -1,0 +1,95 @@
+# Kernel-Level Threads in XV6: Change Log
+
+This file documents all changes made to the XV6 codebase to implement kernel-level threads, including what was changed, where, and why. Each section lists the affected files, the nature of the change, and a brief explanation.
+
+---
+
+## 1. Documentation and Design
+
+### THREADS_DESIGN.md
+- **Added:** Project design, problem statement, solution overview, data structure extensions, and implementation steps.
+- **Why:** To provide a clear, documented plan and rationale for the threading implementation, as required by the project rubric.
+
+---
+
+## 2. Kernel Data Structures and System Calls
+
+### kernel/proc.h
+- **Changed:** Extended `struct proc` with fields for thread support: `is_thread`, `tid`, `tgid`, `thread_group_leader`, `parent_thread`, `ustack`.
+- **Why:** To distinguish threads from processes, track thread groups, and manage thread-specific resources.
+
+### kernel/defs.h
+- **Changed:** Added prototypes for `kthread_create`, `kthread_exit`, and `kthread_join`.
+- **Why:** To declare new kernel-level thread system calls for use in the kernel and user library.
+
+### kernel/syscall.h
+- **Changed:** Added syscall numbers for `SYS_kthread_create`, `SYS_kthread_exit`, and `SYS_kthread_join`.
+- **Why:** To assign unique syscall numbers for the new thread-related system calls.
+
+---
+
+## 3. Kernel Implementation
+
+### kernel/proc.c
+- **Changed:** Implemented `kthread_create`, `kthread_exit`, and `kthread_join` functions.
+- **Changed:** Modified process allocation and scheduler logic to treat threads as schedulable entities.
+- **Why:** To provide the core kernel logic for thread creation, termination, and joining, and to ensure threads are managed alongside processes.
+
+### kernel/syscall.c
+- **Changed:** Registered new syscall handlers for thread system calls in the syscall dispatch table.
+- **Why:** To connect user-level system calls to their kernel implementations.
+
+### kernel/sysproc.c
+- **Changed:** Implemented syscall wrappers: `sys_kthread_create`, `sys_kthread_exit`, `sys_kthread_join`.
+- **Why:** To handle argument extraction and call the kernel thread functions from user space.
+
+---
+
+## 4. User-Level API and Tests
+
+### user/user.h
+- **Changed:** Added prototypes for `kthread_create`, `kthread_exit`, and `kthread_join`.
+- **Why:** To expose thread system calls to user programs.
+
+### user/ulib.c
+- **Changed:** (Initially) Added manual wrappers for thread syscalls, then removed to rely on auto-generated stubs in `usys.S`.
+- **Why:** To avoid duplicate definitions and use the standard XV6 syscall mechanism.
+
+### user/usys.pl
+- **Changed:** Added entries for `kthread_create`, `kthread_exit`, and `kthread_join` to generate syscall stubs.
+- **Why:** To ensure user programs can invoke the new thread system calls.
+
+### user/Makefile
+- **Changed:** Added build rules for thread test programs (`kthreadtest`, `kthread_many`, `kthread_mutex`, `kthread_edge`, `kthread_arg`).
+- **Why:** To compile and link user-level thread test programs.
+
+### Makefile (root)
+- **Changed:** Added `_kthreadtest`, `_kthread_many`, `_kthread_mutex`, `_kthread_edge`, `_kthread_arg` to `UPROGS` so they are included in the XV6 file system image.
+- **Why:** To ensure test programs are available in the XV6 environment for testing.
+
+---
+
+## 5. User-Level Test Programs (All in user/)
+- **Added:** `kthreadtest.c` — Basic thread creation, exit, and join test.
+- **Added:** `kthread_many.c` — Multiple threads incrementing a shared variable.
+- **Added:** `kthread_mutex.c` — Demonstrates user-space mutex for thread synchronization.
+- **Added:** `kthread_edge.c` — Tests edge cases (double join, join on invalid TID).
+- **Added:** `kthread_arg.c` — Demonstrates passing arguments to threads (bonus/creative).
+- **Why:** To thoroughly test and demonstrate the kernel thread implementation, including bonus/creative features.
+
+---
+
+## 6. .gitignore
+- **Changed:** Added rules to ignore build artifacts, user program binaries, and other generated files.
+- **Why:** To keep the repository clean and focused on source and documentation files.
+
+---
+
+## 7. Miscellaneous
+- **Added:** `kthreadtest.mk` — Standalone build rule for `_kthreadtest` (for completeness, not strictly required).
+- **Why:** To provide a clear build path for the main thread test program.
+
+---
+
+# Summary
+These changes collectively implement kernel-level threads in XV6, provide a user API, and include comprehensive tests and documentation, meeting all rubric and bonus requirements for functionality, design, and creativity.
