@@ -70,7 +70,23 @@ If you see `exec kthreadtest failed` or similar, it means the test binary is not
 - **Solution:**
     1. Close the QEMU window or press `Ctrl-a x` to exit QEMU.
     2. Review your thread implementation and test logic for infinite loops or resource leaks.
-    3. Reboot and try running other tests to isolate the issue.
+    3. Add debug prints to both the kernel and user test programs to trace where execution stops.
+    4. Add timeouts or exit conditions to test programs to prevent infinite hangs.
+    5. Reboot and try running other tests to isolate the issue.
+    6. Update `history.txt` with findings and solutions.
+
+---
+
+## Important Notes (Update)
+
+- **Run test programs without the underscore** (e.g., `kthreadtest`, not `_kthreadtest`).
+- If the shell hangs or the device lags after running a test, it may be due to a bug in the thread implementation or test program (e.g., infinite loop, deadlock, runaway thread creation).
+- If this happens:
+    1. Exit QEMU with `Ctrl-a x` or close the window.
+    2. Add debug prints to your test program and kernel thread code to trace execution.
+    3. Add timeouts or exit conditions to test programs to prevent infinite hangs.
+    4. Rebuild and try again.
+- If you see `exec ... failed`, the binary is missing from the image. Rebuild as described above.
 
 ---
 
@@ -99,3 +115,24 @@ To clean the build and remove generated files:
 
 # Summary
 These tests collectively demonstrate the correct implementation of kernel-level threads, including creation, exit, join, synchronization, and edge case handling. All rubric and bonus requirements are covered.
+
+# Debugging in Progress (May 2025)
+- If you encounter a hang or lag (e.g., after `[main] Starting kthreadtest`), check for issues in thread stack setup, thread function pointer, and join logic.
+- Add debug prints to kernel and user code to trace where execution stops.
+- Update `history.txt` with findings and solutions as you debug.
+
+### Troubleshooting and Notes
+
+- If you see `exec kthreadtest failed` or similar, the test binary is missing from the file system image. Run `make clean && make && make qemu` to rebuild and ensure all test programs are included.
+- If the device becomes unresponsive or lags after running a thread test, there may be a bug in the thread function or shared variable handling. Check for:
+  - The thread function must take a pointer to the global shared variable and increment it directly.
+  - The shared variable should be declared as `volatile int shared = 0;` at global scope.
+  - For `kthread_mutex`, the increment must be inside the mutex lock/unlock block.
+- Expected output for each test:
+  - `kthreadtest`: Thread runs, main joins, exit status is correct.
+  - `kthread_many`: All threads join, shared variable is 4000 (4 threads × 1000 increments).
+  - `kthread_mutex`: All threads join, shared variable is 4000, increments are protected by mutex.
+  - `kthread_edge`: Double join and invalid join fail gracefully.
+  - `kthread_arg`: Thread receives and returns argument correctly.
+- If the shared variable is not 4000, check for race conditions, missing atomic operations, or incorrect argument passing to the thread function.
+- If you get a kernel panic or `usertrap(): unexpected scause`, check for stack pointer or argument passing bugs in thread creation.

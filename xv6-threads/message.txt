@@ -1,0 +1,71 @@
+that was what i sent befor ((that was what is sent before ("that want i sent to in the began of this chat "i have project ("Implement Multi-Threading (Kernel-Level Threads): Add support for kernel-level threads in XV6."and this is the rubric "Project Overview:
+
+These are the guidelines for the team-based Operating Systems project. The objective is to deepen your understanding of both basic and advanced OS concepts through hands-on experience. We don’t expect novel research or the creation of another Linux clone; rather, we expect your work to demonstrate thoughtful design and implementation.
+
+Each team has been assigned a specific project idea to work on, which must be implemented on the Xv6 operating system. While the difficulty level may vary between projects, this will be taken into account during our evaluation. Finally, remember our goal is for you to enjoy the process, gain hands-on experience, and build a solid understanding of both basic and advanced concepts in operating systems.
+
+Project Guidelines:
+
+To guide your work, please consider the following expectations:
+
+Understand the underlying problem clearly.
+
+A strong grasp of the problem is crucial for building an effective and thoughtful solution.(10%)
+
+Explain your solution approach and demonstrate understanding.
+
+Be prepared to clearly articulate your design decisions and the concepts behind your implementation.(40%)
+
+Focus on functionality.
+
+Ensure that your implementation works as intended and meets the goals of the project.(30%)
+
+Aim for good design quality.
+
+Your solution should be elegant, clear, and maintainable, following best practices in design and implementation.(20%)
+
+Be creative and innovative. (Optional)
+
+While not required, original or insightful approaches are encouraged and appreciated.
+
+Use version control and collaborate effectively. (Optional)
+
+While not required, teams are strongly encouraged to use Git for version control and coordination. All team members should be able to contribute to and manage the shared repository effectively.
+
+One team member should initialize the shared project repository by importing their copy of the xv6-labs-2024 source code. Other members can then clone this repository and begin contributing. All team members should be able to pull and push changes using standard Git commands ( git pull , git push ).
+
+Note that Git only tracks files that have been explicitly committed. Use git status regularly to monitor untracked files, and use git add <filename> to add files for the next commit, and git commit -a -m "your message describing your changes" to record your updates. To exclude unnecessary files from version control, create a .gitignore file in your repository and list file names or patterns (one per line) that Git should ignore.
+
+" i need to do every thing also the optional to get the bonus ok i need you now to follow step by step with from start what to do. i am using orcal virtualbox ubontu. i need to make great project" "you have the all access on the files so you can edit or make a new file etc .so do this project also now that i made repositry and pushed the xv6 file to it ""don't stop in the moddle of procees to ask me work and no worry make the whole work without ask any quetion just make all changes without ask "") so now i need to check if there somthing missing in this ptoject the optional thing i need to do it i need the project perfect ") after try the test that what sent{ "blocks 1) blocks 1954 total 2000
+balloc: first 944 blocks have been allocated
+balloc: write bitmap block at sector 45
+qemu-system-riscv64 -machine virt -bios none -kernel kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=fs.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0
+
+xv6 kernel is booting
+
+hart 2 starting
+hart 1 starting
+init: starting sh
+$ kthreadtest
+e"it is make the device lag and very heavy i don't know why and this was appear and never stop untill i deleted the terminal ""} so what should i do ? you have the access to the all files so make what you want "and i need to tell you somting when you tell me you make qemu you become in infinity load and never do anything again so make sure when you told me make qemu you told me what should i do after ")) now this error happen "balloc: first 944 blocks have been allocated
+balloc: write bitmap block at sector 45
+qemu-system-riscv64 -machine virt -bios none -kernel kernel/kernel -m 128M -smp 3 -nographic -global virtio-mmio.force-legacy=false -drive file=fs.img,if=none,format=raw,id=x0 -device virtio-blk-device,drive=x0,bus=virtio-mmio-bus.0
+
+xv6 kernel is booting
+
+hart 2 starting
+hart 1 starting
+init: starting sh
+$ _kthreadtest
+exec _kthreadtest failed
+$ _kthread_many
+exec _kthread_many failed
+$ _kthread_mutex
+exec _kthread_mutex failed
+$ _kthread_edge
+exec _kthread_edge failed
+$ _kthread_arg
+exec _kthread_arg failed
+$ " and i need you to update the test.txt that explain how to test to make understant what was the step before  "i need you to create history.txt that you explain for your self for next time what was the problem what you did and each time you append to make you learn faster each time i send you message because when i send message to you you forget what we did before ok" don't go to terminal until you find the soulution  (now when run this happen  "$ _kthreadtest
+exec _kthreadtest failed
+$ _kthread_many" and the device lag and be heavy and not doing in thing don't forget to update all thing like histort.txt and test to next time to understand what happen )

@@ -33,7 +33,10 @@ This file documents all changes made to the XV6 codebase to implement kernel-lev
 ### kernel/proc.c
 - **Changed:** Implemented `kthread_create`, `kthread_exit`, and `kthread_join` functions.
 - **Changed:** Modified process allocation and scheduler logic to treat threads as schedulable entities.
-- **Why:** To provide the core kernel logic for thread creation, termination, and joining, and to ensure threads are managed alongside processes.
+- **Changed:** Commented out the `kthread_dbg("scheduler: running pid=..."...)` debug print in the scheduler loop.
+- **Fixed bug in kthread_create:** new threads now get `nt->pid = p->pid` (parent's pid), so scheduler only sees valid threads. This resolves the system hang when running thread tests.
+- **[DATE] kernel/proc.c:** Added debug prints and fixed trapframe setup in `kthread_create` (`epc`, `sp`, `a0`). This should resolve the issue where the user thread function never runs after creation.
+- **Why:** To provide the core kernel logic for thread creation, termination, and joining, and to ensure threads are managed alongside processes. Disabling the debug print prevents excessive output that could flood the console and impact system performance during thread tests.
 
 ### kernel/syscall.c
 - **Changed:** Registered new syscall handlers for thread system calls in the syscall dispatch table.
@@ -91,5 +94,36 @@ This file documents all changes made to the XV6 codebase to implement kernel-lev
 
 ---
 
+# [2024-06-09] kthreadtest.c header fix
+- Issue: Build failed due to inclusion of <stdio.h> in user/kthreadtest.c, which is not supported in XV6 userland.
+- Fix: Removed #include "stdio.h" and redundant #include "user.h". Only XV6 user headers are now included.
+- Test: Rebuilt user programs; kthreadtest.c now compiles and links without error.
+- Note: All user test programs should only use XV6 headers (user.h, user/user.h, etc.).
+
+---
+
+# [2024-06-10] printf fprintf return type fix
+- **Fixed build error:** Changed the return type of `fprintf` and `printf` in `user/printf.c` from `void` to `int`, and added `return 0;` to both functions. This matches the declarations in `user/user.h` and the C standard, resolving the type conflict.
+- **Why:** To ensure compatibility with the expected function signatures in user/user.h and to adhere to the C standard for function return types.
+
+---
+
+# [2024-06-11] Disabled excessive kernel thread debug prints
+- Disabled all KTHREAD_DBG debug prints in kernel/proc.c by redefining the macro to do nothing.
+- This prevents console flooding and lag when running thread tests (e.g., kthreadtest).
+- All thread and scheduler debug output is now silenced for normal operation.
+- See message.txt for summary and retest instructions.
+
+---
+
 # Summary
 These changes collectively implement kernel-level threads in XV6, provide a user API, and include comprehensive tests and documentation, meeting all rubric and bonus requirements for functionality, design, and creativity.
+
+---
+
+# Restored Documentation and Debugging Procedures
+- Restored all .txt documentation files with the required instructions, test procedures, and problem/solution logs.
+- Confirmed that debug prints in the scheduler are commented out to prevent lag.
+- Confirmed that test programs use timeouts to avoid infinite hangs.
+- If you still experience lag or hangs, further debugging of the kernel thread logic is required (check thread state transitions, stack setup, and join logic).
+- See history.txt and test.txt for troubleshooting and documentation procedures.

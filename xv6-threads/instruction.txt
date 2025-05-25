@@ -1,0 +1,5 @@
+each file has .txt is important that cam make you learn the problem in history.txt you should read it to know what was before and you should  append not overwrite what the problem you solve and what you changed to make you now for the next message what happen befor test.file is how i thought to run the program inside xv6 changes.txt what change to know if i update file or create file or to ehat to use instruction.txt will tell you how what the txt for you have the access to change what inside in file in this project  messages.txt contain the messages that i sent and has the project rubric and the project idea and some messages the messaghe that i will sent in the chat the  message you have to solve 
+"if you run thing inside kernel and you reach to make qemu step don't continue make me to do it because each time you do it the chat stop you can access all the befor like make clean ,make or any thing else but make qemu no"
+"read instruction.txt carefully first"
+make sure to read the every txt file to get what i told you in the first line
+i need you to use smart ways to know from where the problems and to solve it 

@@ -138,20 +138,22 @@ vprintf(int fd, const char *fmt, va_list ap)
   }
 }
 
-void
+int
 fprintf(int fd, const char *fmt, ...)
 {
   va_list ap;
 
   va_start(ap, fmt);
   vprintf(fd, fmt, ap);
+  return 0;
 }
 
-void
+int
 printf(const char *fmt, ...)
 {
   va_list ap;
 
   va_start(ap, fmt);
   vprintf(1, fmt, ap);
+  return 0;
 }
